@@ -13,37 +13,48 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# Step 2: Login to Azure using Service Principal
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: '1655f00d-a4c4-4ef2-84e1-fe175ad5cf99'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      echo "Logging in with Service Principal..."
-      az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
-
-# Step 3: Initialize Terraform Backend
-- script: |
-    terraform init \
-      -backend-config="storage_account_name=$(BASE_NAME)statestor" \
-      -backend-config="container_name=tfstate-cont" \
-      -backend-config="key=mlopsinfra.tfstate" \
-      -backend-config="resource_group_name=$(RESOURCE_GROUP)" \
-      -backend-config="client_id=$(ARM_CLIENT_ID)" \
-      -backend-config="client_secret=$(ARM_CLIENT_SECRET)" \
-      -backend-config="tenant_id=$(ARM_TENANT_ID)"
-  workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+- task: TerraformCLI@0
   displayName: 'Terraform Init'
+  inputs:
+    command: 'init'
+    workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+    environmentServiceName: 'azure-resource-connection'
+    environmentVariables:
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
+      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+# Step 2: Login to Azure using Service Principal
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: '1655f00d-a4c4-4ef2-84e1-fe175ad5cf99'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       echo "Logging in with Service Principal..."
+#       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
 
-# Step 4: Terraform Plan
-- script: |
-    terraform plan -out=tfplan
-  workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
-  displayName: 'Terraform Plan'
+# # Step 3: Initialize Terraform Backend
+# - script: |
+#     terraform init \
+#       -backend-config="storage_account_name=$(BASE_NAME)statestor" \
+#       -backend-config="container_name=tfstate-cont" \
+#       -backend-config="key=mlopsinfra.tfstate" \
+#       -backend-config="resource_group_name=$(RESOURCE_GROUP)" \
+#       -backend-config="client_id=$(ARM_CLIENT_ID)" \
+#       -backend-config="client_secret=$(ARM_CLIENT_SECRET)" \
+#       -backend-config="tenant_id=$(ARM_TENANT_ID)"
+#   workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+#   displayName: 'Terraform Init'
 
-# Step 5: Terraform Apply
-- script: |
-    terraform apply -auto-approve tfplan
-  workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
-  displayName: 'Terraform Apply'
+# # Step 4: Terraform Plan
+# - script: |
+#     terraform plan -out=tfplan
+#   workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+#   displayName: 'Terraform Plan'
+
+# # Step 5: Terraform Apply
+# - script: |
+#     terraform apply -auto-approve tfplan
+#   workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+#   displayName: 'Terraform Apply'
