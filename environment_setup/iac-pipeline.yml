@@ -9,21 +9,35 @@ variables:
   
 steps:
 # Step 1: Install Terraform
-- task: TerraformInstaller@0
+- task: TerraformInstaller@1
+  displayName: 'Install Terraform'
   inputs:
     terraformVersion: 'latest'
 
-- task: TerraformCLI@0
-  displayName: 'Terraform Init'
+- task: TerraformTaskV4@4
+  displayName: 'terraform init'
   inputs:
+    provider: 'azurerm'
     command: 'init'
     workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
-    environmentServiceName: 'azure-resource-connection'
-    environmentVariables:
-      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-      ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-      ARM_TENANT_ID: $(ARM_TENANT_ID)
-      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    backendServiceArm: azure-resource-connection'
+    backendAzureRmResourceGroupName: '$(RESOURCE_GROUP)'
+    backendAzureRmStorageAccountName: '$(BASE_NAME)statestor'
+    backendAzureRmContainerName: 'tfstate-cont'
+    backendAzureRmKey: 'mlopsinfra.tfstate'
+  env:
+    ARM_USE_AZUREAD: true
+# - task: TerraformCLI@0
+#   displayName: 'Terraform Init'
+#   inputs:
+#     command: 'init'
+#     workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
+#     environmentServiceName: 'azure-resource-connection'
+#     environmentVariables:
+#       ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+#       ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+#       ARM_TENANT_ID: $(ARM_TENANT_ID)
+#       ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 # Step 2: Login to Azure using Service Principal
 # - task: AzureCLI@2
 #   inputs:
