@@ -20,7 +20,7 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
-    backendServiceArm: azure-resource-connection'
+    backendServiceArm: 'azure-resource-connection'
     backendAzureRmResourceGroupName: '$(RESOURCE_GROUP)'
     backendAzureRmStorageAccountName: '$(BASE_NAME)statestor'
     backendAzureRmContainerName: 'tfstate-cont'
