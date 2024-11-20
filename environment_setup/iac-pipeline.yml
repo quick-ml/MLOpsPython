@@ -8,10 +8,6 @@ variables:
   - group: devopsforai-aml-vg
   
 steps:
-- task: TerraformInstaller@1
-  displayName: 'Use Terraform 0.12.24'
-  inputs:
-    terraformVersion: 1.9.8
 # Step 1: Install Terraform
 # - task: TerraformInstaller@0
 #   displayName: 'Install Terraform'
