@@ -41,6 +41,8 @@ steps:
     backendAzureRmStorageAccountSku: 'Standard_LRS'
     backendAzureRmContainerName: 'tfstate-cont'
     backendAzureRmKey: 'mlopsinfra.tfstate'
+  env:
+    ARM_USE_AZUREAD: true
 
 - task: TerraformCLI@0
   displayName: 'TF validate - Deploy MLOps resources to Azure'
