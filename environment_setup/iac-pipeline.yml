@@ -6,7 +6,6 @@ pool:
 
 variables:
   - group: devopsforai-aml-vg
-  - TF_WORKING_DIR: '' # Update with your Terraform directory
   
 steps:
 # Step 1: Install Terraform
