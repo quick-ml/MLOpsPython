@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  agent: 'mlopspool'
+  name: 'mlopspool'
 
 variables:
   - group: devopsforai-aml-vg
