@@ -20,11 +20,11 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: $(Build.SourcesDirectory)/environment_setup/tf-templates
-    backendServiceArm: 'azure-resource-connection'
-    backendAzureRmResourceGroupName: '$(RESOURCE_GROUP)'
-    backendAzureRmStorageAccountName: '$(BASE_NAME)statestor'
-    backendAzureRmContainerName: 'tfstate-cont'
-    backendAzureRmKey: 'mlopsinfra.tfstate'
+    # backendServiceArm: 'azure-resource-connection'
+    # backendAzureRmResourceGroupName: '$(RESOURCE_GROUP)'
+    # backendAzureRmStorageAccountName: '$(BASE_NAME)statestor'
+    # backendAzureRmContainerName: 'tfstate-cont'
+    # backendAzureRmKey: 'mlopsinfra.tfstate'
   env:
     ARM_USE_AZUREAD: true
 # - task: TerraformCLI@0
