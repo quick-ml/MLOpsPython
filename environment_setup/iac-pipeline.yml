@@ -16,7 +16,7 @@ steps:
 # Step 2: Login to Azure using Service Principal
 - task: AzureCLI@2
   inputs:
-    azureSubscription: '<Azure Service Connection Name>'
+    azureSubscription: 'azure-resource-connection'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
