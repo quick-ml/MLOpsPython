@@ -9,10 +9,10 @@ variables:
   
 steps:
 # Step 1: Install Terraform
-- task: TerraformInstaller@0
-  displayName: 'Install Terraform'
-  inputs:
-    terraformVersion: 'latest'
+# - task: TerraformInstaller@0
+#   displayName: 'Install Terraform'
+#   inputs:
+#     terraformVersion: 'latest'
 
 - task: TerraformTaskV4@4
   displayName: 'terraform init'
