@@ -15,7 +15,7 @@ pr:
     - environment_setup/tf-templates/*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: mlopspool
 
 variables:
 - group: devopsforai-aml-vg
