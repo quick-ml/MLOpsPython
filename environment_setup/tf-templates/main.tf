@@ -3,6 +3,11 @@ provider "azurerm" {
  features {}
 }
 
+provider "azuredevops" {
+  org_service_url = "https://dev.azure.com/edforce"
+  use_oidc        = true
+}
+
 variable BASE_NAME {}
 variable RESOURCE_GROUP {}
 variable WORKSPACE_NAME {}
