@@ -1,11 +1,7 @@
 provider "azurerm" {
  version = "=2.3.0"
  features {}
-}
-
-provider "azuredevops" {
-  org_service_url = "https://dev.azure.com/edforce"
-  use_oidc        = true
+ use_oidc_token = true
 }
 
 variable BASE_NAME {}
